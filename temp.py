@@ -1,5 +1,6 @@
 #Super Lab1 de POO
 import numpy as np
+import random
 
 def menu():
     print("-------------------------------------------------------------------------\n"
@@ -7,19 +8,22 @@ def menu():
           "-------------------------------------------------------------------------") 
     return
 
-def tablero():
-    menu()
-    Pares = int(input("Pares? "))
-    if Pares <= 0:
+def tablero(Cartas):
+    if Cartas <= 0:
         print("Se necesita al menos 1 par para poder jugar!\n")
         tablero()
     else:
-        Dimension = Pares * 2
+        Dimension = Cartas * 2       
+    Par1 = list(range(1, Cartas+1))
+   
+  
         
         
+        
+tablero(10)        
              
               
-    return
+
     
 
 
