@@ -5,9 +5,10 @@ from copy import deepcopy
 
 def menu():
     print("-------------------------------------------------------------------------\n"
-          "Bienvenido al juego de memorice por favor indique la cantidad de pares \n"
-          "-------------------------------------------------------------------------") 
-    return
+          "Bienvenido al juego de memorice por favor indique la cantidad de pares \n"          "-------------------------------------------------------------------------") 
+    Cartas = int(input(" "))
+    
+    return Cartas
 
 def tablero(Cartas):
     if Cartas <= 0:
@@ -48,10 +49,14 @@ def tablero(Cartas):
     return Matriz, Simbolos
 
 def Coords(Matriz, Simbolos): #Verificar coordenadas
-    temp = 0
+    temp = 0   
     loop1 = 1
     loop2 = 1
     while True:
+        if Matriz == Simbolos:
+            print("El tablero se revelo entero!")
+            return 0, temp, Simbolos, Matriz
+        
         while loop1:            
             Cord1 = input("Intoduzca la primera Coordenada (x,y): ").split(",")
             if int(Cord1[0]) > len(Simbolos) or int(Cord1[0]) < 0:
@@ -69,7 +74,7 @@ def Coords(Matriz, Simbolos): #Verificar coordenadas
                             Simbolos[i][j] = Matriz[i][j] 
                             loop1 = 0
                         else:                            
-                            print("Ya revelaste este numero!!!")
+                            print("El numero ya esta revelado!!!")
                             print(Simbolos)
         print(Simbolos) #Agregar funcion de impresion bonita
         loop1 = 1
@@ -98,7 +103,7 @@ def Coords(Matriz, Simbolos): #Verificar coordenadas
                                 Simbolos[i][j] = Matriz[i][j]   
                                 loop2 = 0
                             else:                            
-                                print("Ya revelaste este numero!!!")
+                                print("El numero ya esta revelado!!!!!!")
                                 print(Simbolos)
         print(Simbolos)
         
@@ -114,22 +119,37 @@ def Coords(Matriz, Simbolos): #Verificar coordenadas
         else:
             print("Obtuviste un 1 punto!")
             temp += 1
-    return temp
+    return 1, temp, Simbolos, Matriz
             
-        
-        
+         
+Pt_1 = 0 #Jugadores
+Pt_2 = 0
 
 
+Cartas = menu () #Al final esto no llego a anda pero aun lo para tener un menu bonito 
+X , Y = tablero(Cartas)
+
+Turn = False #False jugador 1 True jugador 2
+while True:
+    Comp, puntos, Simbolos, Matriz = Coords(X,Y)
+    if Turn:
+        Pt_2 += puntos
+    else:
+        Pt_1 += puntos
+    if Comp == 0:
+        if Pt_1 == Pt_2:
+            print("Empataron!")
+        elif Pt_1 > Pt_2:
+            print("Gano el jugdor 1")
+        else:
+            print("Gano el jugador 2")
+        break
+    
+    Turn = not Turn
+            
+    
 
 
-
-
-
-x,y = tablero(10)
-
-A = Coords(x,y)
-
-print(A)
 
 
 
