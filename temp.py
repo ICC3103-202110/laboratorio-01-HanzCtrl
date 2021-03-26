@@ -38,12 +38,12 @@ def tablero(Cartas):
     #Lo anterior lo hice para poder generar tableros relativamente bonitos y de manera "Automatica"
     #Para numeros como 7 y 9 se generara un tablero de tamaño predeterminado
     
-    print(Matriz)
+    
     Simbolos = deepcopy(Matriz)
     for i in range(len(Simbolos)):
         for x in range (len(Simbolos[i])):
             Simbolos[i][x] = "*"
-    print(Simbolos) #Crea la matriz de *
+  
   
     
     return Matriz, Simbolos
@@ -54,17 +54,17 @@ def Coords(Matriz, Simbolos): #Verificar coordenadas
     loop2 = 1
     while True:
         if Matriz == Simbolos:
-            print("El tablero se revelo entero!")
+            print("\nEl tablero se revelo entero!\n")
             return 0, temp, Simbolos, Matriz
         
         while loop1:            
-            Cord1 = input("Intoduzca la primera Coordenada (x,y): ").split(",")
+            Cord1 = input("\nIntoduzca la primera Coordenada (x,y): \n").split(",")
             if int(Cord1[0]) > len(Simbolos) or int(Cord1[0]) < 0:
-                print("El tablero no es tan grande!")
+                print("\nEl tablero no es tan grande!\n")
                 continue
             
             if int(Cord1[1]) > len(Simbolos[int(Cord1[0])]) or int(Cord1[1]) < 0:
-                print("El tablero no es tan grande!")
+                print("\nEl tablero no es tan grande!\n")
                 continue    
             
             for i in range(len(Matriz)):
@@ -74,25 +74,25 @@ def Coords(Matriz, Simbolos): #Verificar coordenadas
                             Simbolos[i][j] = Matriz[i][j] 
                             loop1 = 0
                         else:                            
-                            print("El numero ya esta revelado!!!")
-                            print(Simbolos)
-        print(Simbolos) #Agregar funcion de impresion bonita
+                            print("\nEl numero ya esta revelado!!!\n")
+                            Print(Simbolos)
+        Print(Simbolos) #Agregar funcion de impresion bonita
         loop1 = 1
                 
         while loop2:            
                         
-                Cord2 = input("Intoduzca la segunda Coordenada (x,y): ").split(",")
+                Cord2 = input("\nIntoduzca la segunda Coordenada (x,y): \n").split(",")
                 if Cord2 == Cord1:                 
-                    print("Ey no repitas coordenadas!!")
-                    print(Simbolos)
+                    print("\nEy no repitas coordenadas!!\n")
+                    Print(Simbolos)
                     continue
                 
                 if int(Cord2[0]) > len(Simbolos) or int(Cord2[0]) < 0:
-                    print("El tablero no es tan grande!")
+                    print("\nEl tablero no es tan grande!\n")
                     continue
             
                 if int(Cord2[1]) > len(Simbolos[int(Cord2[0])]) or int(Cord2[1]) < 0:
-                    print("El tablero no es tan grande!")
+                    print("\nEl tablero no es tan grande!\n")
                     continue  
                     
                                               
@@ -103,25 +103,39 @@ def Coords(Matriz, Simbolos): #Verificar coordenadas
                                 Simbolos[i][j] = Matriz[i][j]   
                                 loop2 = 0
                             else:                            
-                                print("El numero ya esta revelado!!!!!!")
-                                print(Simbolos)
-        print(Simbolos)
+                                print("\nEl numero ya esta revelado!!!!!!\n")
+                                Print(Simbolos)
+        Print(Simbolos)
         
         loop2 = 1
         
         
         if Simbolos[int(Cord1[0])][int(Cord1[1])] != Simbolos[int(Cord2[0])][int(Cord2[1])]:
-            print("No hubo match!")
+            print("\nNo hubo match!\n")
             Simbolos[int(Cord1[0])][int(Cord1[1])] = "*"
             Simbolos[int(Cord2[0])][int(Cord2[1])] = "*"
-            print(Simbolos)
+            Print(Simbolos)
             break
         else:
-            print("Obtuviste un 1 punto!")
+            print("\nObtuviste un 1 punto!\n")
             temp += 1
-    return 1, temp, Simbolos, Matriz
-            
-         
+    return 1, temp, Simbolos, Matriz         
+
+def Print(Matrix):
+    print("\nHere is your board!\n")
+    for index in range(len(Matrix[0])):  #The first list will always dictate how long the lines will be      
+        print("\t", index, end=" ")
+    print("\n")
+    cont = 0
+    
+    for fila in Matrix:
+        print(cont, end=" ")
+        for valor in fila:
+            print("\t", valor, end=" ")
+        cont += 1
+        print()
+
+
 Pt_1 = 0 #Jugadores
 Pt_2 = 0
 
@@ -129,8 +143,16 @@ Pt_2 = 0
 Cartas = menu () #Al final esto no llego a anda pero aun lo para tener un menu bonito 
 X , Y = tablero(Cartas)
 
+Print(Y)
+
 Turn = False #False jugador 1 True jugador 2
 while True:
+    if Turn:
+        print("\nTurno del jugador 2!\n")
+    else:
+        print("\nTurno del jugador 1!\n")
+        
+        
     Comp, puntos, Simbolos, Matriz = Coords(X,Y)
     if Turn:
         Pt_2 += puntos
@@ -138,11 +160,11 @@ while True:
         Pt_1 += puntos
     if Comp == 0:
         if Pt_1 == Pt_2:
-            print("Empataron!")
+            print("Empataron! con", Pt_1, "puntos")
         elif Pt_1 > Pt_2:
-            print("Gano el jugdor 1")
+            print("Gano el jugdor 1 con ", Pt_1, "Puntos!")
         else:
-            print("Gano el jugador 2")
+            print("Gano el jugador 2 con ", Pt_2, "Puntos!")
         break
     
     Turn = not Turn
