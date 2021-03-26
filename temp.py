@@ -3,123 +3,130 @@ import numpy as np
 import random
 from copy import deepcopy
 
+
+#Me di cuenta muy tarde que idealmente tenia que estar en ingles asi que las variables seran en español perdoooon!
 def menu():
     print("-------------------------------------------------------------------------\n"
-          "Bienvenido al juego de memorice por favor indique la cantidad de pares \n"          "-------------------------------------------------------------------------") 
-    Cartas = int(input(" "))
+          "                     Welcome to the memory game! \n"    
+          "                 Please indicate how many pairs you want!\n"
+          "            Remember that this game only accept numbers as answers\n"
+                           
+          "-------------------------------------------------------------------------") 
+    Cards = int(input("Number of pairs: "))
     
-    return Cartas
+    return Cards
 
-def tablero(Cartas):
-    if Cartas <= 0:
-        print("Se necesita al menos 1 par para poder jugar!\n")
+def tablero(Cards):
+    if Cards <= 0:
+        print("You need at least 1 pair to play! \n")
         tablero()
     else:
-        Dimension = Cartas * 2   
-    global Par1    
-    Par1 = list(range(1, Cartas+1))
+        Dimension = Cards * 2   
+    global Pair1    
+    Pair1 = list(range(1, Cards+1))
 
-    Matriz = Par1 + Par1
-    random.shuffle(Matriz)
+    Matrix = Pair1 + Pair1
+    random.shuffle(Matrix)
                  
     if Dimension % 5 == 0:
-        Matriz = [Matriz[i:i+5] for i in range(0, len(Matriz), 5)] #Aca separo la lista en pequeñas listas
+        Matrix = [Matrix[i:i+5] for i in range(0, len(Matrix), 5)] #Aca separo la lista en pequeñas listas
     elif Dimension % 4 == 0:
-        if Cartas == 2:
-            Matriz = [Matriz[i:i+2] for i in range(0, len(Matriz), 2)] #Esto es para que en caso de que sean 2 pares quede un bloue de 2x2
+        if Cards == 2:
+            Matrix = [Matrix[i:i+2] for i in range(0, len(Matrix), 2)] #Esto es para que en caso de que sean 2 pares quede un bloue de 2x2
         else:
-            Matriz = [Matriz[i:i+4] for i in range(0, len(Matriz), 4)]
+            Matrix = [Matrix[i:i+4] for i in range(0, len(Matrix), 4)]
     elif Dimension % 2 == 0:
-        if Cartas % 2 != 0:
-            Matriz = [Matriz[i:i+4] for i in range(0, len(Matriz), 4)] 
+        if Cards % 2 != 0:
+            Matrix = [Matrix[i:i+4] for i in range(0, len(Matrix), 4)] 
         else:
-            Matriz = [Matriz[i:i+2] for i in range(0, len(Matriz), 2)] 
+            Matrix = [Matrix[i:i+2] for i in range(0, len(Matrix), 2)] 
         
     #Lo anterior lo hice para poder generar tableros relativamente bonitos y de manera "Automatica"
     #Para numeros como 7 y 9 se generara un tablero de tamaño predeterminado
     
     
-    Simbolos = deepcopy(Matriz)
-    for i in range(len(Simbolos)):
-        for x in range (len(Simbolos[i])):
-            Simbolos[i][x] = "*"
+    Symbols = deepcopy(Matrix)
+    for i in range(len(Symbols)):
+        for x in range (len(Symbols[i])):
+            Symbols[i][x] = "*"
   
   
     
-    return Matriz, Simbolos
+    return Matrix, Symbols
 
-def Coords(Matriz, Simbolos): #Verificar coordenadas
+def Coords(Matrix, Symbols): #Verificar coordenadas
     temp = 0   
     loop1 = 1
     loop2 = 1
     while True:
-        if Matriz == Simbolos:
-            print("\nEl tablero se revelo entero!\n")
-            return 0, temp, Simbolos, Matriz
+        if Matrix == Symbols:
+            print("\nThe whole board has been revealed! \n")
+            return 0, temp, Symbols, Matrix
         
         while loop1:            
-            Cord1 = input("\nIntoduzca la primera Coordenada (x,y): \n").split(",")
-            if int(Cord1[0]) > len(Simbolos) or int(Cord1[0]) < 0:
-                print("\nEl tablero no es tan grande!\n")
+            Cord1 = input("\nPlease write the first coordinate x,y: \n").split(",")
+            if int(Cord1[0]) > len(Symbols) or int(Cord1[0]) < 0:
+                print("\nThe board is not that big!\n")
                 continue
             
-            if int(Cord1[1]) > len(Simbolos[int(Cord1[0])]) or int(Cord1[1]) < 0:
-                print("\nEl tablero no es tan grande!\n")
+            if int(Cord1[1]) > len(Symbols[int(Cord1[0])]) or int(Cord1[1]) < 0:
+                print("\nThe board is not that big!\n")
                 continue    
             
-            for i in range(len(Matriz)):
-                for j in range(len(Matriz[i])): 
+            for i in range(len(Matrix)):
+                for j in range(len(Matrix[i])): 
                     if i == int(Cord1[0]) and j == int(Cord1[1]) :
-                        if Simbolos[int(Cord1[0])][int(Cord1[1])] == "*":                            
-                            Simbolos[i][j] = Matriz[i][j] 
+                        if Symbols[int(Cord1[0])][int(Cord1[1])] == "*":                            
+                            Symbols[i][j] = Matrix[i][j] 
                             loop1 = 0
                         else:                            
-                            print("\nEl numero ya esta revelado!!!\n")
-                            Print(Simbolos)
-        Print(Simbolos) #Agregar funcion de impresion bonita
+                            print("\nThat number has already been revealed!!!\n")
+                            Print(Symbols)
+        Print(Symbols) #Agregar funcion de impresion bonita
         loop1 = 1
                 
         while loop2:            
                         
-                Cord2 = input("\nIntoduzca la segunda Coordenada (x,y): \n").split(",")
+                Cord2 = input("\nPlease write the second coordinate x,y: \n").split(",")
                 if Cord2 == Cord1:                 
-                    print("\nEy no repitas coordenadas!!\n")
-                    Print(Simbolos)
+                    print("\nHey do not repeat coordinates!!\n")
+                    Print(Symbols)
                     continue
                 
-                if int(Cord2[0]) > len(Simbolos) or int(Cord2[0]) < 0:
-                    print("\nEl tablero no es tan grande!\n")
+                if int(Cord2[0]) > len(Symbols) or int(Cord2[0]) < 0:
+                    print("\nThe board is not that big!\n")
                     continue
             
-                if int(Cord2[1]) > len(Simbolos[int(Cord2[0])]) or int(Cord2[1]) < 0:
-                    print("\nEl tablero no es tan grande!\n")
+                if int(Cord2[1]) > len(Symbols[int(Cord2[0])]) or int(Cord2[1]) < 0:
+                    print("\nThe board is not that big!\n")
                     continue  
                     
                                               
-                for i in range(len(Matriz)):
-                    for j in range(len(Matriz[i])):               
+                for i in range(len(Matrix)):
+                    for j in range(len(Matrix[i])):               
                         if i == int(Cord2[0]) and j == int(Cord2[1]):  
-                            if Simbolos[int(Cord2[0])][int(Cord2[1])] == "*":  
-                                Simbolos[i][j] = Matriz[i][j]   
+                            if Symbols[int(Cord2[0])][int(Cord2[1])] == "*":  
+                                Symbols[i][j] = Matrix[i][j]   
                                 loop2 = 0
                             else:                            
-                                print("\nEl numero ya esta revelado!!!!!!\n")
-                                Print(Simbolos)
-        Print(Simbolos)
+                                print("\nThat number has already been revealed!!!!!!\n")
+                                Print(Symbols)
+        Print(Symbols)
         
         loop2 = 1
         
         
-        if Simbolos[int(Cord1[0])][int(Cord1[1])] != Simbolos[int(Cord2[0])][int(Cord2[1])]:
-            print("\nNo hubo match!\n")
-            Simbolos[int(Cord1[0])][int(Cord1[1])] = "*"
-            Simbolos[int(Cord2[0])][int(Cord2[1])] = "*"
-            Print(Simbolos)
+        if Symbols[int(Cord1[0])][int(Cord1[1])] != Symbols[int(Cord2[0])][int(Cord2[1])]:
+            print("\nNo match!\n")
+            Symbols[int(Cord1[0])][int(Cord1[1])] = "*"
+            Symbols[int(Cord2[0])][int(Cord2[1])] = "*"
+            Print(Symbols)
             break
         else:
-            print("\nObtuviste un 1 punto!\n")
+            print("\nYou got 1 point!\n"
+                  "You get another turn!\n")
             temp += 1
-    return 1, temp, Simbolos, Matriz         
+    return 1, temp, Symbols, Matrix         
 
 def Print(Matrix):
     print("\nHere is your board!\n")
@@ -140,31 +147,31 @@ Pt_1 = 0 #Jugadores
 Pt_2 = 0
 
 
-Cartas = menu () #Al final esto no llego a anda pero aun lo para tener un menu bonito 
-X , Y = tablero(Cartas)
+Cards = menu () #Al final esto no llego a anda pero aun lo para tener un menu bonito 
+X , Y = tablero(Cards)
 
 Print(Y)
 
 Turn = False #False jugador 1 True jugador 2
 while True:
     if Turn:
-        print("\nTurno del jugador 2!\n")
+        print("\nPlayer 2 turn!\n")
     else:
-        print("\nTurno del jugador 1!\n")
+        print("\nPlayer 1 turn!\n")
         
         
-    Comp, puntos, Simbolos, Matriz = Coords(X,Y)
+    Comp, puntos, Symbols, Matrix = Coords(X,Y)
     if Turn:
         Pt_2 += puntos
     else:
         Pt_1 += puntos
     if Comp == 0:
         if Pt_1 == Pt_2:
-            print("Empataron! con", Pt_1, "puntos")
+            print("There was a tie with", Pt_1, "points")
         elif Pt_1 > Pt_2:
-            print("Gano el jugdor 1 con ", Pt_1, "Puntos!")
+            print("Player 1 won with", Pt_1, "Points!")
         else:
-            print("Gano el jugador 2 con ", Pt_2, "Puntos!")
+            print("Player 2 won with", Pt_2, "Points!")
         break
     
     Turn = not Turn
